@@ -11,41 +11,26 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async () => {
-  // just testing api access
   return await getMyPermissions();
 }
 
 export default function Index() {
   const permissions = useLoaderData();
-  console.log(permissions);
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to the dashboard</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+      <h1>DevPulse</h1>
+
+      <h2>Permissions</h2>
+      <dl>
+        {Object.entries(permissions.permissions).map(([key, value]) => (
+          <>
+            <dt key={`${value.id}-name`}>
+              <strong>{value.name}</strong>
+            </dt>
+            <dt key={`${value.id}-desc`}>{value.description}</dt>
+          </>
+        ))}
+      </dl>
     </div>
   );
 }
