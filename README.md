@@ -1,6 +1,6 @@
-# Welcome to Remix + Vite!
+# DevPulse
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/guides/vite) for details on supported features.
+DevPulse is an app that allows users to stay on the pulse of their developer activities and visualize their progress over time. The application is built using the [Remix](https://remix.run) framework and [Vite](https://vitejs.dev) build tool.
 
 ## Development
 
