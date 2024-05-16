@@ -22,14 +22,22 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@mantine/charts": "^7.9.1",
+    "@mantine/core": "^7.9.1",
+    "@mantine/dates": "^7.9.1",
+    "@mantine/form": "^7.9.1",
+    "@mantine/hooks": "^7.9.1",
+    "@mantine/notifications": "^7.9.1",
     "@remix-run/node": "^2.9.1",
     "@remix-run/react": "^2.9.1",
     "@remix-run/serve": "^2.9.1",
     "better-sqlite3": "^10.0.0",
+    "dayjs": "^1.11.11",
     "drizzle-orm": "^0.30.10",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.9.1",
@@ -44,6 +52,9 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.4.38",
+    "postcss-preset-mantine": "^1.15.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1"
