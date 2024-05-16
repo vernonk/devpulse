@@ -1,16 +1,26 @@
 import type { MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+
+import { getMyPermissions } from "~/utils/jira.server";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "DevPulse" },
+    { name: "description", content: "Stay on the pulse of your team" },
   ];
 };
 
+export const loader = async () => {
+  // just testing api access
+  return await getMyPermissions();
+}
+
 export default function Index() {
+  const permissions = useLoaderData();
+  console.log(permissions);
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
+      <h1>Welcome to the dashboard</h1>
       <ul>
         <li>
           <a

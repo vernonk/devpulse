@@ -3,3 +3,8 @@ node_modules
 /.cache
 /build
 .env
+
+NOTES.md
+
+*.sqlite
+*.sqlite3

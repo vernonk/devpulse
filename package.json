@@ -1,12 +1,23 @@
 {
-  "name": "jira-pulse",
+  "name": "devpulse",
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "author": {
+    "name": "Vernon Kesner",
+    "email": "vernonkesner@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vernonk/devpulse"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "db:migrate": "drizzle-kit migrate",
+    "db:migrations": "drizzle-kit generate",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc"
   },
@@ -14,6 +25,8 @@
     "@remix-run/node": "^2.9.1",
     "@remix-run/react": "^2.9.1",
     "@remix-run/serve": "^2.9.1",
+    "better-sqlite3": "^10.0.0",
+    "drizzle-orm": "^0.30.10",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -24,6 +37,7 @@
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
+    "drizzle-kit": "^0.21.1",
     "eslint": "^8.38.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.28.1",
