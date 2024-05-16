@@ -14,6 +14,10 @@ export const loader = async () => {
   return await getMyPermissions();
 }
 
+function hasPermissionEmoji(permission) {
+  return permission.havePermission ? "✅" : "❌";
+}
+
 export default function Index() {
   const permissions = useLoaderData();
   return (
@@ -25,7 +29,7 @@ export default function Index() {
         {Object.entries(permissions.permissions).map(([key, value]) => (
           <>
             <dt key={`${value.id}-name`}>
-              <strong>{value.name}</strong>
+              <strong>{value.name} {hasPermissionEmoji(value)}</strong>
             </dt>
             <dt key={`${value.id}-desc`}>{value.description}</dt>
           </>
