@@ -3,6 +3,8 @@ import { useLoaderData } from '@remix-run/react';
 
 import { getMyPermissions } from '~/utils/jira.server';
 
+import UserTypeahead from '~/components/UserTypeahead/UserTypeahead';
+
 import coreStylesHref from '@mantine/core/styles.css?url'; 
 import chartsStylesHref from '@mantine/charts/styles.css?url';
 import notificationsStylesHref from '@mantine/notifications/styles.css?url';
@@ -35,6 +37,8 @@ export default function Index() {
   return (
     <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.8' }}>
       <h1>DevPulse</h1>
+      <h2>My Team</h2>
+      <UserTypeahead />
 
       <h2>Permissions</h2>
       <dl>
