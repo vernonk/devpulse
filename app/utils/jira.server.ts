@@ -1,4 +1,4 @@
-import { json } from "@remix-run/node";
+import { json } from '@remix-run/node';
 
 const COMMON_HEADERS = {
   Authorization: `Bearer ${process.env.JIRA_API_TOKEN}`,

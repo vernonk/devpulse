@@ -4,8 +4,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+} from '@remix-run/react';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
