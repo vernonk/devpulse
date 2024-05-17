@@ -2,6 +2,17 @@
 
 DevPulse is an app that allows users to stay on the pulse of their developer activities and visualize their progress over time. The application is built using the [Remix](https://remix.run) framework and [Vite](https://vitejs.dev) build tool.
 
+## Setup
+
+Create a `.env` file at the root and you will need these base environment variables:
+
+```shell
+# .env
+BASE_JIRA_API_URL=https://jira.example.com/rest/api/2
+JIRA_API_TOKEN=your-jira-access-token
+DB_URL=./path/to/yourdb.sqlite3
+```
+
 ## Development
 
 Run the Vite dev server:
