@@ -9,6 +9,7 @@ import {
   PillsInput,
   useCombobox
 } from '@mantine/core';
+import { placeholder } from 'drizzle-orm';
 
 function getUsers(query, signal) {
   return new Promise((res, rej) => {
@@ -25,6 +26,7 @@ function getUsers(query, signal) {
 
 export default function UserTypeahead({ 
   onSelectionChange = () => {},
+  placeholder = 'Search users',
 }) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -89,7 +91,7 @@ export default function UserTypeahead({
                 name="q"
                 onBlur={() => combobox.closeDropdown()}
                 value={search}
-                placeholder="Search users"
+                placeholder={placeholder}
                 onChange={(event) => {
                   combobox.updateSelectedOptionIndex();
                   setSearch(event.currentTarget.value);
@@ -128,5 +130,5 @@ export default function UserTypeahead({
 
 UserTypeahead.propTypes = {
   onSelectionChange: PropTypes.func,
+  placeholder: PropTypes.string,
 };
-}
