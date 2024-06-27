@@ -1,3 +1,5 @@
+/* global process */
+
 // TODO: Will be removed for db values, temporary for testing APIs
 import devpulseConfig from '../../devpulse.config';
 
@@ -5,14 +7,14 @@ const COMMON_HEADERS = {
   Authorization: `Bearer ${process.env.JIRA_API_TOKEN}`,
 };
 
-const get = async (url: string) => {
+const get = async (url) => {
   const response = await fetch(url, {
     headers: COMMON_HEADERS,
   });
   return await response.json();
 }
 
-const post = async (url: string, body: any) => {
+const post = async (url, body) => {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -28,7 +30,7 @@ export const getMyPermissions = async () => {
   return await get(`${process.env.BASE_JIRA_API_URL}/mypermissions`);
 };
 
-export const getUserData = async (query: string) => {
+export const getUserData = async (query) => {
   const endpoint = `${process.env.BASE_JIRA_API_URL}/user/picker`;
   const search = `?query=${query}&maxResults=10&showAvatar=true`;
   return await get(`${endpoint}${search}`);
