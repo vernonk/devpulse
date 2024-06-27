@@ -8,3 +8,5 @@ NOTES.md
 
 *.sqlite
 *.sqlite3
+
+devpulse.config.js
