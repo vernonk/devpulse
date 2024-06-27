@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   CheckIcon,
   Combobox,
@@ -22,7 +23,9 @@ function getUsers(query, signal) {
   });
 }
 
-export default function UserTypeahead() {
+export default function UserTypeahead({ 
+  onSelectionChange = () => {},
+}) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
@@ -34,6 +37,10 @@ export default function UserTypeahead() {
   const [value, setValue] = useState([]);
 
   const abortController = useRef();
+
+  useEffect(() => {
+    onSelectionChange(value);
+  }, [value]);
 
   const fetchOptions = async (query) => {
     if (abortController.current) {
@@ -117,4 +124,9 @@ export default function UserTypeahead() {
       </Combobox.Dropdown>
     </Combobox>
   );
+}
+
+UserTypeahead.propTypes = {
+  onSelectionChange: PropTypes.func,
+};
 }
