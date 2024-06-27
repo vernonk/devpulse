@@ -102,7 +102,7 @@ export default function UserTypeahead() {
         </PillsInput>
       </Combobox.DropdownTarget>
       <Combobox.Dropdown>
-        {data?.users?.length && data?.users.map((user) => (
+        {data?.users?.length ? data?.users.map((user) => (
           <Combobox.Option key={user.key} value={user.name} active={value.includes(user.key)}>
             <Group gap="sm">
               {value.includes(user.key) ? <CheckIcon size={12} /> : null}
@@ -110,7 +110,7 @@ export default function UserTypeahead() {
               <span>{user.name}</span>
             </Group>
           </Combobox.Option>
-        ))}
+        )) : null}
         {data?.users?.length === 0 ? (
           <Combobox.Empty>No users found</Combobox.Empty>
         ) : null}
