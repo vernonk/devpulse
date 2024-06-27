@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
-import { getUserData } from '~/utils/jira.server';
+import { getUserData } from '~/.server/jira.server';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const query = new URL(request.url).searchParams.get('q');
