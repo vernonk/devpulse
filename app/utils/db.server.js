@@ -1,11 +1,13 @@
+/* global process */
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
 
-let db: Database;
+// let db: Database;
 
-declare global {
-  let __db__: typeof drizzle | undefined;
-}
+// declare global {
+//   let __db__: typeof drizzle | undefined;
+// }
+let db;
 
 if (process.env.NODE_ENV === 'production') {
   const sqlite3 = new Database(process.env.DB_URL);
