@@ -7,14 +7,14 @@ const COMMON_HEADERS = {
   Authorization: `Bearer ${process.env.JIRA_API_TOKEN}`,
 };
 
-const get = async (url) => {
+async function get(url) {
   const response = await fetch(url, {
     headers: COMMON_HEADERS,
   });
   return await response.json();
 }
 
-const post = async (url, body) => {
+async function post(url, body) {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -26,11 +26,11 @@ const post = async (url, body) => {
   return await response.json();
 }
 
-export const getMyPermissions = async () => {
+export async function getMyPermissions() {
   return await get(`${process.env.BASE_JIRA_API_URL}/mypermissions`);
-};
+}
 
-export const getUserData = async (query) => {
+export async function getUserData(query) {
   const endpoint = `${process.env.BASE_JIRA_API_URL}/user/picker`;
   const search = `?query=${query}&maxResults=10&showAvatar=true`;
   return await get(`${endpoint}${search}`);
@@ -41,9 +41,9 @@ const defaultUserTicketsForDurationQuery = {
   duration: '-30days',
 };
 
-export const getUserTicketsForDuration = async (
-  options = defaultUserTicketsForDurationQuery
-) => {
+export async function getUserTicketsForDuration(
+  options = {}
+) {
   const endpoint = `${process.env.BASE_JIRA_API_URL}/search`;
   // TODO: Smarten up jql when moving these to db driven values
   const {
@@ -55,7 +55,14 @@ export const getUserTicketsForDuration = async (
       },
     },
   } = devpulseConfig;
-  const jql = `assignee was ${options.assignee} AND updated >= ${options.duration} AND issuetype not in (${IGNORED_ISSUE_TYPES.join(', ')}) ORDER BY ${ORDER_BY.join(', ')}`;
+  const opts = {
+    ...defaultUserTicketsForDurationQuery,
+    ...options,
+  };
+  const assignees = opts.assignees.map((assignee) => `'${assignee}'`).join(', ');
+  const jql = `assignee was in (${assignees}) AND updated >= ${opts.duration} AND issuetype not in (${IGNORED_ISSUE_TYPES.join(', ')}) ORDER BY ${ORDER_BY.join(', ')}`;
+  console.log('jqeury', jql);
+  // TOODO: Add error handling 😅
   return await post(`${endpoint}`, {
     jql,
     startAt: 0,

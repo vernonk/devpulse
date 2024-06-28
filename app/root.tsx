@@ -65,6 +65,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </NavLink>
                 <NavLink
                   className={({ isActive }) => isActive ? 'active' : ''}
+                  to="/insights"
+                >
+                  Insights
+                </NavLink>
+                <NavLink
+                  className={({ isActive }) => isActive ? 'active' : ''}
                   to="/team"
                 >
                   Team
