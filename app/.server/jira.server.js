@@ -5,6 +5,7 @@ import devpulseConfig from '../../devpulse.config';
 
 const COMMON_HEADERS = {
   Authorization: `Bearer ${process.env.JIRA_API_TOKEN}`,
+  Accept: 'application/json',
 };
 
 async function get(url) {
@@ -61,7 +62,6 @@ export async function getUserTicketsForDuration(
   };
   const assignees = opts.assignees.map((assignee) => `'${assignee}'`).join(', ');
   const jql = `assignee was in (${assignees}) AND updated >= ${opts.duration} AND issuetype not in (${IGNORED_ISSUE_TYPES.join(', ')}) ORDER BY ${ORDER_BY.join(', ')}`;
-  console.log('jqeury', jql);
   // TOODO: Add error handling 😅
   return await post(`${endpoint}`, {
     jql,
