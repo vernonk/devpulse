@@ -1,24 +1,21 @@
 /* global process */
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
+import { members } from '../drizzle/schema.server';
 
-// let db: Database;
-
-// declare global {
-//   let __db__: typeof drizzle | undefined;
-// }
 let db;
+let globalDb;
 
 if (process.env.NODE_ENV === 'production') {
   const sqlite3 = new Database(process.env.DB_URL);
-  db = drizzle(sqlite3);
+  db = drizzle(sqlite3, { schema: { members } });
 } else {
-  if (!global.__db__) {
-    const sqlite3 = new Database(':memory:');
-    db = drizzle(sqlite3);
-    global.__db__ = db;
+  if (!globalDb) {
+    const sqlite3 = new Database(process.env.DB_URL);
+    db = drizzle(sqlite3, { schema: { members } });
+    globalDb = db;
   }
-  db = global.__db__;
+  db = globalDb;
 }
 
 export { db };
