@@ -22,7 +22,8 @@ function getUsers(query, signal) {
   });
 }
 
-export default function UserTypeahead({ 
+export default function UserTypeahead({
+  getResetCombo = undefined,
   excludedValues = [],
   onSelectionChange = () => {},
   placeholder = 'Search users',
@@ -36,6 +37,15 @@ export default function UserTypeahead({
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [value, setValue] = useState([]);
+
+  if (getResetCombo) {
+    getResetCombo(() => {
+        combobox.resetSelectedOption();
+        setData([]);
+        setSearch('');
+        setValue([]);
+    });
+  }
 
   const abortController = useRef();
 
@@ -138,6 +148,7 @@ export default function UserTypeahead({
 }
 
 UserTypeahead.propTypes = {
+  getResetCombo: PropTypes.func,
   excludedValues: PropTypes.arrayOf(PropTypes.string),
   onSelectionChange: PropTypes.func,
   placeholder: PropTypes.string,
