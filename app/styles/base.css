@@ -1,0 +1,21 @@
+nav {
+  display: flex;
+  flex-grow: 1;
+  gap: 10px;
+  justify-content: flex-end;
+
+  a {
+    background-color: var(--mantine-primary-color-1);
+    border-radius: 8px;
+    padding: 10px 15px;
+    text-decoration: none;
+    
+    &:hover {
+      background-color: var(--mantine-primary-color-4);
+    }
+
+    &.active {
+      background-color: var(--mantine-primary-color-2);
+    }
+  }
+}

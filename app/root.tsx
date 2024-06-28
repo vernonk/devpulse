@@ -1,17 +1,28 @@
 import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import { navigate } from '@remix-run/node';
 import {
   Links,
   Meta,
+  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import {
+  Box,
+  ColorSchemeScript,
+  Container,
+  Group,
+  MantineProvider
+} from '@mantine/core';
 
 import coreStylesHref from '@mantine/core/styles.css?url';
 import chartsStylesHref from '@mantine/charts/styles.css?url';
 import notificationsStylesHref from '@mantine/notifications/styles.css?url';
 import datesStylesHref from '@mantine/dates/styles.css?url';
+import baseStylesHref from '~/styles/base.css?url';
+
+import logo from './images/devpulse-logo.png';
 
 export const meta: MetaFunction = () => {
   return [
@@ -25,6 +36,7 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: chartsStylesHref },
   { rel: 'stylesheet', href: datesStylesHref },
   { rel: 'stylesheet', href: notificationsStylesHref },
+  { rel: 'stylesheet', href: baseStylesHref },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -39,7 +51,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <MantineProvider>
-          {children}
+          <Container mb={20} mt={20}>
+            <Group gap={0}>
+              <Box mr={20} mt={10}>
+                <img src={logo} alt="DevPulse Logo" height="30" />
+              </Box>
+              <nav>
+                <NavLink 
+                  className={({ isActive }) => isActive ? 'active' : ''}
+                  to="/"
+                >
+                  Home
+                </NavLink>
+                <NavLink
+                  className={({ isActive }) => isActive ? 'active' : ''}
+                  to="/team"
+                >
+                  Team
+                </NavLink>
+              </nav>
+            </Group>
+            {children}
+          </Container>
         </MantineProvider>
         <ScrollRestoration />
         <Scripts />

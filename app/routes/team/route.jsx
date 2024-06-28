@@ -3,7 +3,7 @@ import { Form, useLoaderData } from '@remix-run/react';
 import { useCallback, useRef, useState } from 'react';
 import { asc } from 'drizzle-orm';
 
-import { Button } from '@mantine/core';
+import { Button, Group, Space } from '@mantine/core';
 
 import UserTypeahead from '../../components/UserTypeahead/UserTypeahead';
 import TeamMembers from './TeamMembers';
@@ -48,14 +48,17 @@ export default function Team() {
       <h1>Team Members</h1>
       <Form method="post" onSubmit={() => { resetCombo() }}>
         <input type="hidden" name="selectedUsers" value={selectedUsers} />
-        <UserTypeahead
-          excludedValues={members.map((member) => `${member.username}:${member.name}`)}
-          getResetCombo={getResetCombo}
-          onSelectionChange={onSelectionChange}
-          placeholder="Add team members" 
-        />
-        <Button type="submit">Save</Button>
+        <Group justify="flex-end">
+          <UserTypeahead
+            excludedValues={members.map((member) => `${member.username}:${member.name}`)}
+            getResetCombo={getResetCombo}
+            onSelectionChange={onSelectionChange}
+            placeholder="Add team members" 
+          />
+          <Button type="submit">Save</Button>
+        </Group>
       </Form>
+      <Space h="lg" />
       <TeamMembers members={members} />
     </div>
   );
