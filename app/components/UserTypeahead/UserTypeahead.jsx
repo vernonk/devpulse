@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  CheckIcon,
   Combobox,
   Group,
   Loader,
@@ -9,7 +8,6 @@ import {
   PillsInput,
   useCombobox
 } from '@mantine/core';
-import { placeholder } from 'drizzle-orm';
 
 function getUsers(query, signal) {
   return new Promise((res, rej) => {
@@ -25,6 +23,7 @@ function getUsers(query, signal) {
 }
 
 export default function UserTypeahead({ 
+  excludedValues = [],
   onSelectionChange = () => {},
   placeholder = 'Search users',
 }) {
@@ -42,9 +41,9 @@ export default function UserTypeahead({
 
   useEffect(() => {
     onSelectionChange(value);
-  }, [value]);
+  }, [onSelectionChange, value]);
 
-  const fetchOptions = async (query) => {
+  const fetchOptions = async (query, existingValues) => {
     if (abortController.current) {
       abortController.current.abort();
     }
@@ -52,7 +51,14 @@ export default function UserTypeahead({
     abortController.current = new AbortController();
     setLoading(true);
     const data = await getUsers(query, abortController.current.signal);
-    setData(data);
+    const filteredUsers = data.users.filter((user) => {
+      const value = `${user.name}:${user.displayName}`;
+      return !existingValues.includes(value) && !excludedValues.includes(value);
+    });
+    setData({
+      ...data,
+      users: filteredUsers,
+    });
     setLoading(false);
     abortController.current = undefined;
   };
@@ -67,7 +73,7 @@ export default function UserTypeahead({
 
   const values = value.map((item) => (
     <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
-      {item}
+      {item.split(':')[1]}
     </Pill>
   ));
 
@@ -95,7 +101,7 @@ export default function UserTypeahead({
                 onChange={(event) => {
                   combobox.updateSelectedOptionIndex();
                   setSearch(event.currentTarget.value);
-                  fetchOptions(event.currentTarget.value);
+                  fetchOptions(event.currentTarget.value, value);
                   combobox.openDropdown();
                 }}
                 onKeyDown={(event) => {
@@ -112,11 +118,14 @@ export default function UserTypeahead({
       </Combobox.DropdownTarget>
       <Combobox.Dropdown>
         {data?.users?.length ? data?.users.map((user) => (
-          <Combobox.Option key={user.key} value={user.name} active={value.includes(user.key)}>
+          <Combobox.Option 
+            key={user.key}
+            value={`${user.name}:${user.displayName}`}
+            active={value.includes(user.key)}
+          >
             <Group gap="sm">
-              {value.includes(user.key) ? <CheckIcon size={12} /> : null}
-              <img src={user.avatar} alt={user.name} width={24} height={24} />
-              <span>{user.name}</span>
+              <img src={user.avatarUrl} alt={user.displayName} width={24} height={24} />
+              <span>{user.displayName}</span>
             </Group>
           </Combobox.Option>
         )) : null}
@@ -129,6 +138,7 @@ export default function UserTypeahead({
 }
 
 UserTypeahead.propTypes = {
+  excludedValues: PropTypes.arrayOf(PropTypes.string),
   onSelectionChange: PropTypes.func,
   placeholder: PropTypes.string,
 };
