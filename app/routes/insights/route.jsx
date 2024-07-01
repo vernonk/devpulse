@@ -1,5 +1,5 @@
 import { json } from '@remix-run/node';
-import { Form, useActionData, useLoaderData } from '@remix-run/react';
+import { Form, useActionData, useLoaderData, useNavigation } from '@remix-run/react';
 import { useState } from 'react';
 import { asc } from 'drizzle-orm';
 
@@ -55,6 +55,7 @@ export default function Insights() {
   const { teamMembers, metrics: metricsLoaderData } = useLoaderData();
   const actionData = useActionData();
   const metricsActionData = actionData?.metrics;
+  const { state: formState } = useNavigation();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const dropdownOptions = teamMembers.map(m => m.name);
   const onChange = (value) => {
@@ -75,7 +76,12 @@ export default function Insights() {
             onChange={onChange}
             placeholder="Choose team member"
           />
-          <Button type="submit">Save</Button>
+          <Button 
+            loading={formState === 'loading' || formState === 'submitting'}
+            type="submit"
+          >
+            Show
+          </Button>
         </Group>
       </Form>
       {preferredData ? (
@@ -88,7 +94,7 @@ export default function Insights() {
               {' '}
               {preferredData.total}
             </p>
-            <MetricsTable data={preferredData} />
+            <MetricsTable data={preferredData} assignee={selectedUsers} />
           </section>
         </article>
       ) : null}
