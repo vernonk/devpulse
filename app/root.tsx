@@ -51,7 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <MantineProvider>
-          <Container mb={20} mt={20}>
+          <Container mb={20} mt={20} size="xl">
             <Group gap={0}>
               <Box mr={20} mt={10}>
                 <img src={logo} alt="DevPulse Logo" height="30" />
