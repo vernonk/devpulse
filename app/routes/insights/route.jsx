@@ -6,7 +6,6 @@ import { asc } from 'drizzle-orm';
 import { 
   Button,
   Group,
-  List,
   Select,
 } from '@mantine/core';
 
